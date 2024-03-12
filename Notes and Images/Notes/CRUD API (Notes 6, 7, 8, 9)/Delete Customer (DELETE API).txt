@@ -1,0 +1,51 @@
+Notes(No 8)
+
+1) We are using the "@DeleteMapping" annotation to accept an HTTP DELETE request from the client.
+
+     2) The url of the "@RequestMapping" annotation is still enabled which means both our GET and POST APIs
+     are still operating.
+
+     3) The "@DeleteMapping" annotation though has something added in the default path that given by the
+     "@RequestMapping" annotation path: "http://localhost:8080/api/v1/customers".
+
+     4) The new path for the HTTP DELETE request will now have the "delete_resource/{customerID}" added to
+     it. The "{}" though will not be actually added in the path since they are there because we want to
+     insert a value.
+
+     5) Also the path will obviously change if we want to delete a different customer from the database
+     since their "id" is also different.
+     -> If id == 1
+        path(1): http://localhost:8080/api/v1/customers/delete_resource/1
+     -> If id == 2
+        path(2): http://localhost:8080/api/v1/customers/delete_resource/2
+     -> and so on for as many customers as we may have and want to delete.
+
+     6) As a client now, we want to create two HTTP DELETE requests from our command line to delete those
+     two resources(data objects) from the database using the two paths above.
+     For path(1):
+     -> Command: curl -X DELETE http://localhost:8080/api/v1/customers/delete_resource/1
+     For path(2):
+     -> Command: curl -X DELETE http://localhost:8080/api/v1/customers/delete_resource/2
+
+     7) Considering the case of needing an "Authorization Token" as a client to be allowed to delete
+     anything from the database, the above paths would go as follows:
+     For path(1):
+     -> Command: curl -X -H "Authorization: Bearer your_token" DELETE http://localhost:8080/api/v1/customers/delete_resource/1
+     For path(2):
+     -> Command: curl -X -H "Authorization: Bearer your_token" DELETE http://localhost:8080/api/v1/customers/delete_resource/2
+     Replace "your_token" with your actual authentication token.
+
+8) The "@PathVariable" annotation is used to extract values from the URI template and bind 
+them as method parameters, in our case as parameter for the "deleteCustomer" method.
+
+9) The "deleteCustomer" method would be as follows:
+
+@DeleteMapping("{customerID}")
+public void deleteCustomer(@PathVariable("customerID") Integer id){
+    // Deletes a customer from the database using their "id".
+    customerRepository.deleteById(id);
+}
+
+10) Using our pre-made object of the "customerRepository" interface that is also connected
+to our database with the "JpaRepository", we can call the "deleteById" method to safely
+delete an inserted data object from our database by using their "id".

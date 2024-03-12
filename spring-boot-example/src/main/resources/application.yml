@@ -1,0 +1,34 @@
+# This is a configuration file for our Spring Boot Application.
+# Documentation info:
+#   link: https://docs.spring.io/spring-boot/docs/3.2.1/reference/htmlsingle/
+#   Section: 18.3 "Embedded Web Servers"
+
+# Setting the server's port (Default is 8080).
+server:
+  port: 8080
+
+# Setting how the server will run (servlet [default], reactive) or deactivate it (none).
+spring:
+#  "datasource" configuration
+  datasource:
+    # The "url" below will create the database for the customers.
+    url: jdbc:postgresql://localhost:5332/customer
+    # Use the same here as in "docker-compose.yml"
+    username: Admin_User
+    password: password
+
+#  "jpa" configuration
+  jpa:
+    hibernate:
+      # After we create, we also want to "destroy" the schema at the end of the session.
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        # We are using postgres dialect.
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+
+#  "main" configuration
+  main:
+    web-application-type: servlet

@@ -1,0 +1,26 @@
+Notes(No 3)
+
+1) command: docker ps -a (Check available containers as well as they are running or not).
+
+2) Under the "Image" tag is the container's name (p.e. "postgres"), copy it to use it after the
+-it flag in the next command.
+
+3) command: docker exec -it postgres bash (Exec shell commands inside a "running" container. After
+this we should get a bash named "root@id:/#", id == container's id).
+
+4) command: psql -U Username (Client for connecting to a postgresQL database with the selected
+username that we specified in the configuration settings. If the connection has been established
+we should get a bash named "Username=#", Username == the username we specified).
+
+5) command: \l (Listing all the available databases).
+*Note: In our project we have already create the "Admin_User" when running the 
+"docker-compose.yml".
+
+6) command: CREATE DATABASE customer; (To create the "customer" database that we specified in
+settings but has not yet been created in the project like the "Admin_User" database).
+
+7) If you use the command at step 5 you will find the new "customer" database added.
+
+8) By pressing CTRL-D you back to the container's shell "root@id:/#" and by pressing it again
+you go out of the container's shell and back to the original terminal.
+

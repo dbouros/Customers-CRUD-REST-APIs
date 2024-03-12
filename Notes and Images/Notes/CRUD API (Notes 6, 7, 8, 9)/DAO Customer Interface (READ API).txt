@@ -1,0 +1,131 @@
+Notes(No 6)
+
+1) Create an interface called "CustomerRepository" inside the /java/our_porject folder.
+
+2) This interface should "extend" the "JpaRepository" which will automatically import the class
+as well. (With our interface extending the JpaRepository class we have all the methods that the 
+JpaRepository class provides available to us, meaning all the CRUD operations, since the "JpaRepository"
+class also extends the "CrudRepository" class)
+
+3) Syntax: JpaRepository<Entity, datatype(Entity_id_type)>
+Code: "public interface CustomerRepository extends JpaRepository<Customer, Integer>"
+This part "JpaRepository<Customer, Integer>" is where the connection happens from the database
+with the class "Customer.java".
+
+#===================================================================================================================================================================================
+READ Customers API. (GET REQUEST)
+
+1) Create a READ Customers API. Go to "Main" build a method of return type "List" fo the 
+class "Customer.java" and while using a private "CustomerRepository" variable, return the 
+customers using the function ".findAll()". (Without additions to the database though, the
+function will return an empty list.)
+
+2) Use the "@GetMapping" annotation above the method just like that with no path at all.
+
+3) Instead go above the "Main" class where the other annotations are and use the
+"@RequestMapping("your_url")" annotation. This will set single url for all that we wanna do.
+
+SOS !! -> MAKE SURE THE "Customer.java" CLASS HAS ALSO AN EMPTY DEFAULT CONSTRUCTOR
+INITIALIZED ALONG WITH THE ONE WE CREATED, OTHERWISE THE MAPPINGS WILL NOT WORK AND THERE
+WILL BE AN ERROR IN THE CONSOLE TERMINAL.
+
+4) Assuming all steps above were followed successfully and the "INSERT TO DATABASE" part
+below was also done successfully, then the browser's output should the JSON data right below.
+
+Output(Array of JSON objects):
+[
+  {
+    "id": 1,
+    "name": "Edy",
+    "email": "edy42694@7viljr.crankymonkey.info",
+    "age": 25
+  },
+  {
+    "id": 51,
+    "name": "Rosy",
+    "email": "rosaline14831@l3lu6wk.crankymonkey.info",
+    "age": 24
+  },
+  {
+    "id": 101,
+    "name": "Erl",
+    "email": "erlewine30006@n18adbm.crankymonkey.info",
+    "age": 58
+  }
+]
+#===================================================================================================================================================================================
+INSERT TO DATABASE:
+
+1) Go with docker inside the "postgres" container and with psql login to the user "Admin_User".
+Afterwards connect to the database "customer" using command: "\c customer".
+
+2) Then use command: "\d customer" to display the columns that you need to make a successful
+insertion in to the "customer" database.
+
+3) Command: "INSERT INTO customer(id, name, email, age) + ENTER(for new line!)".
+
+4) Command: "VALUES (nextval('customer_id_sequence'), 'Edy', 'edy42694@7viljr.crankymonkey.info', 25);".
+*SOS -> for "id" we are using a sequence generator to generate the values so that's why we
+are using the "nextval()" with our sequence generator's name.
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Output: 
+INSERT 0 1  ->  Which means that the insertion was successful !!
+
+Our inserts:
+INSERT INTO customer(id, name, email, age)
+VALUES(nextval('customer_id_sequence'), 'Edy', 'edy42694@7viljr.crankymonkey.info', 25);
+
+INSERT INTO customer(id, name, email, age)                            
+VALUES(nextval('customer_id_sequence'), 'Rosy', 'rosaline14831@l3lu6wk.crankymonkey.info', 24);
+
+INSERT INTO customer(id, name, email, age)
+VALUES(nextval('customer_id_sequence'), 'Erl', 'erlewine30006@n18adbm.crankymonkey.info', 58);
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+5) To check if the inserts were successfully added to the database, type the following command.
+Command: select * from customer;
+
+Output:
+
+ age | id |          email          		    |   name    
+-----+----+------------------------------------------+-----------
+  25 |  1 | edy42694@7viljr.crankymonkey.info       | Edy
+  24 |  2 | rosaline14831@l3lu6wk.crankymonkey.info | Rosy
+  58 |  3 | erlewine30006@n18adbm.crankymonkey.info | Erl
+(3 rows)
+#===================================================================================================================================================================================
+How to JSON(Beginner_Array_Syntax):
+
+1) Single Data Object:
+
+{
+  "name": "Edy",
+  "email": "edy42694@7viljr.crankymonkey.info",
+  "age": 25
+}
+
+2) Array Of Data Objects:
+
+[
+  {
+    "id": 1,
+    "name": "Edy",
+    "email": "edy42694@7viljr.crankymonkey.info",
+    "age": 25
+  },
+  {
+    "id": 51,
+    "name": "Rosy",
+    "email": "rosaline14831@l3lu6wk.crankymonkey.info",
+    "age": 24
+  },
+  {
+    "id": 101,
+    "name": "Erl",
+    "email": "erlewine30006@n18adbm.crankymonkey.info",
+    "age": 58
+  }
+]
+
+#===================================================================================================================================================================================

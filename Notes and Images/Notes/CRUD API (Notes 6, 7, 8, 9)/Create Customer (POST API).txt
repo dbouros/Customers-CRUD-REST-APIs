@@ -1,0 +1,62 @@
+Notes(No 7)
+
+Create Customer API. (POST REQUEST)
+
+1) Create a "record" class which will take as parameters, the body 
+of the request's data that we want our client to POST.
+
+2) Afterwards we create our basic method for the POST request. The method should have the
+"@PostMapping" annotation above it, empty as before. As parameters, the method should take 
+an object of the "record" class mentioned above, along with a "@RequestBody" annotation 
+behind the parameter, this is us passing the "acceptable" body of the request we want to 
+receive inside POST method.
+
+-> The same url given to our "@RequestMapping" annotation will work here too.
+SOS! -> Note that when you are running it, both the APIs will run at the same type, both 
+the methods "getCustomers" from READ API and the "addCustomer" from CREATE API will run(it 
+works fine) at the same time. So we can POST the request to our url, then refresh the page 
+and the client will GET back the data of his POST.
+
+3) Inside the POST method we create a new object of the "Customer" class and with the setters
+we previously created, we set the values of the "customer" object equal to the values that the
+client has given us with the object of the "record" class.
+
+4) Using the "customerRepository" interface that is connected to the database(jdbc), we use 
+the "save" method which is contained inside the "JpaRepository", to save our new customer 
+into the database by giving the save method the "customer" object.
+
+5) After completing all these steps, you can probably run the project without any problems
+and it should work just fine. Even if it's though we must test it as a client and do a POST
+request to our currently running local server. The tutorial used a tool with paid subscription
+called "Postman" so I had to find another way.
+SOS! -> I created a "data.json" file with the data I wanted to post as a client and used
+the command line to do an HTTP POST request to my local server. 
+
+#===================================================================================================================================================================================
+HTTP POST REQUEST (Using Terminal):
+
+Supposing now that we are the client, do the following steps.
+
+1) Create a "data.json" file inside the "resources" folder containing the data you want to 
+post as a client to the server.
+
+SOS! -> In our case it should be ONLY one customer, if we were to use an array to post more
+than one data objects(more customers) the "data.json" file would be rejected by our running
+server because we made a method to specifically accept one data object.
+
+2) Open the command prompt(terminal)(Recommended: Run as administrator).
+
+3) Navigate with your terminal to the project's "resources" folder where the "data.json" file
+is located.
+
+4)Type the following command exactly as written or you may get error status from the server 
+for bad request.
+
+5) Command: "curl -X POST -H "Content-Type: application/json" -d @data.json http://localhost:8080/api/v1/customers" 
+     -> curl: The command for the web request.
+     -> -X POST: The type of request is going to be "POST".
+     -> -H: The type of content that we want to send.
+     -> -d: The actual data that we are sending.
+     -> The link that we have our API endpoint ready to receive the request.
+
+#===================================================================================================================================================================================

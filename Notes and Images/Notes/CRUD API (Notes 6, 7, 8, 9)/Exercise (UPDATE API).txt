@@ -1,0 +1,30 @@
+Notes(No 9)
+
+1) This API uses the "@PutMapping" annotation and has the client do an HTTP PUT request to our server
+to update(edit) information about an existing customer, in our case the "email" variable.
+
+2) We use "customerRepository" object's method "getReferenceById" that gets the "id" of an 
+existing "Customer" object and returns that "Customer" object itself. ( Check the "Code" 
+section below!)
+
+3) Then we create an updated JSON file with the changes we want to make, in our case we only
+wish to change an "email". ("update_data2.json").
+
+4) Now as a client once again, we use the following command to update the "email" variable 
+of the customer with "id == 2".
+
+-> Command: curl -X PUT -H "Content-Type: application/json" -d @update_data2.json http://localhost:8080/api/v1/customers/update_resource/2
+    
+#============================================================================================================================================================
+Code:
+
+@PutMapping("update_resource/{customerID}")
+    public void updateCustomer(@PathVariable("customerID") Integer id, @RequestBody NewCustomerRequest request) {
+        Customer customer = customerRepository.getReferenceById(id);
+        if (customer.getId().equals(id)){
+            customer.setEmail(request.email);
+        }
+        customerRepository.save(customer);
+}
+
+#============================================================================================================================================================

@@ -1,0 +1,84 @@
+Notes(No 5)
+
+Mapping our model which is the class "Customer.java" with our database.
+-> The supposed "customer" represented by the class "Customer.java" is called an "entity"
+-> Mapping "Customer.java"
+
+1) Go above "public class Customer{}" and type the annotation "@Entity".
+
+2) Every "@Entity" also needs a primary key "Id". Go inside "public class Customer{}" and use
+the annotation "@Id".
+
+3) Also use @SequenceGenerator(name, sequenceName) & @GeneratedValue(strategy, generator)
+to create random unique value for the id(primary key) property whenever we insert a new 
+"Customer" entity to the "customer" table in our database.
+
+GPT:
+Usage in Entity Class:
+	When you annotate a field with @GeneratedValue in a JPA entity class, you need to 
+	specify a generator strategy. @SequenceGenerator is one of those strategies.
+
+Attributes of @SequenceGenerator:
+
+	name: The name of the sequence generator. It should be unique within the persistence
+	 unit.
+	sequenceName: The name of the database sequence. This attribute is optional, and if 
+	not specified, JPA uses a default naming strategy.
+	initialValue: The value from which the sequence starts. The default is 1.
+	allocationSize: The number of values that should be allocated at once. This helps 
+	improve performance by reducing the number of database round-trips. The default is 50.
+
+@GeneratedValue specifies that the primary key value will be generated.
+GenerationType.SEQUENCE indicates the usage of a sequence generator.
+generator = "example_seq_generator" links this strategy to the specific @SequenceGenerator 
+named "example_seq_generator."
+@SequenceGenerator defines the details of the sequence generator, such as its name 
+("example_seq_generator"), the name of the database sequence ("example_seq"), and the 
+allocation size.
+
+Output after first run:
+
+Hibernate:
+    create sequence customer_id_sequence start with 1 increment by 50
+Hibernate:
+    create table customer (
+        age integer,
+        id integer not null,
+        email varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+4) Now go back to the postgres container bash(terminal) and connect again to our user 
+"Admin_User" using command "psql -U Admin_User".
+
+5) Then connect to the "customer" database using the command "\c customer".
+Output: "You are now connected to database "customer" as user "Admin_User"."
+
+6) Then use "\dt" to display all "table" relations of the "customer" database or use "\d" to 
+display all relations. (SOS!! -> You need to do this as the "Main.java" is running and the 
+"Hibernate" has created the sequence and the table otherwise since Hibernate's "ddl-auto" is
+set to "create-drop" so after the "Main" is done running, the content of the "customer" database
+will be dropped).
+*ddl == data definition language.
+Output:
+customer=# \dt             
+           List of relations            
+ Schema |   Name   | Type  |   Owner    
+--------+----------+-------+------------
+ public | customer | table | Admin_User 
+(1 row)
+
+customer=# \d
+                   List of relations
+ Schema |         Name         |   Type   |   Owner
+--------+----------------------+----------+------------
+ public | customer             | table    | Admin_User
+ public | customer_id_sequence | sequence | Admin_User
+(2 rows)
+
+7) You can also try some SQL code like "select * from customer;" though the output will be 0 rows
+since nothing has been inserted yet.
+Output:
+ age | id | email | name 
+-----+----+-------+------
+(0 rows)

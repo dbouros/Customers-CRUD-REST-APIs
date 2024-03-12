@@ -1,0 +1,24 @@
+Notes(No 1)
+
+Go to the Spring Initializr link below to initialize your Java Spring Project
+Link: https://start.spring.io/
+
+Start Up:
+After checking all your settings and adding your DEPENDENCIES(We added Spring Web) you can then 
+press EXPLORE and explore the file that will be initialized. After that you can press GENERATE
+to download the initialized Maven Java project with the the Spring Boot libraries and dependencies
+added to it.
+
+Setting:
+	Project: Maven
+	Language: Java
+	Spring Boot: Latest version 3 without SNAPSHOT (Recommended)
+	Project Metadata:
+		Names(Group, Artifact, Name, Description, Package Name): Preference
+		Packaging: Jar
+		Java: 17
+
+Dependencies (For Beginners):
+	Add: Spring Web
+
+Initialize: Press GENERATE and save it where you want your java project to be !

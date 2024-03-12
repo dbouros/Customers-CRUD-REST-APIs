@@ -1,0 +1,25 @@
+Notes(No 4)
+
+1) Open the "application.yml' file
+2) Go under the "spring:" tag with no tabs or spaces on the line and copy-paste the code below with this exact alignment.
+
+#  "datasource" configuration
+  datasource:
+    # The "url" below will create the database for the customers.
+    url: jdbc:postgresql://localhost:5332/customer
+    # Use the same here as in "docker-compose.yml"
+    username: Admin_User
+    password: password
+
+#  "jpa" configuration
+  jpa:
+    hibernate:
+      # After we create, we also want to "destroy" the schema at the end of the session.
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        # We are using postgres dialect.
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+
