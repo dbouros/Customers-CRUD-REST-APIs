@@ -4,44 +4,6 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-/*
-GPT:
-Usage in Entity Class:
-When you annotate a field with @GeneratedValue in a JPA entity class, you need to
-specify a generator strategy. @SequenceGenerator is one of those strategies.
-
-Attributes of @SequenceGenerator:
-
-        name: The name of the sequence generator. It should be unique within the persistence
-        unit.
-        sequenceName: The name of the database sequence. This attribute is optional, and if
-        not specified, JPA uses a default naming strategy.
-        initialValue: The value from which the sequence starts. The default is 1.
-        allocationSize: The number of values that should be allocated at once. This helps
-        improve performance by reducing the number of database round-trips. The default is 50.
-
-1) @GeneratedValue specifies that the primary key value will be generated.
-2) GenerationType.SEQUENCE indicates the usage of a sequence generator.
-3) generator = "example_seq_generator" links this strategy to the specific @SequenceGenerator
-named "example_seq_generator."
-4) @SequenceGenerator defines the details of the sequence generator, such as its name
-("example_seq_generator"), the name of the database sequence ("example_seq"), and the
-allocation size.
-
-Output after first run:
-
-Hibernate:
-    create sequence customer_id_sequence start with 1 increment by 50
-Hibernate:
-    create table customer (
-        age integer,
-        id integer not null,
-        email varchar(255),
-        name varchar(255),
-        primary key (id)
-    )
-*/
-
 // The class "Customer" == "Model".
 
 // "@Entity" belongs with the "JPA" addition to our project. Though we also need a primary key to

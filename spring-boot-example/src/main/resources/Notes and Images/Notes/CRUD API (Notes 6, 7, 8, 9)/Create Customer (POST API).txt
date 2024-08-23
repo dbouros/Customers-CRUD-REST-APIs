@@ -8,8 +8,8 @@ of the request's data that we want our client to POST.
 2) Afterwards we create our basic method for the POST request. The method should have the
 "@PostMapping" annotation above it, empty as before. As parameters, the method should take 
 an object of the "record" class mentioned above, along with a "@RequestBody" annotation 
-behind the parameter, this is us passing the "acceptable" body of the request we want to 
-receive inside POST method.
+behind the parameter, this is to make sure we are passing the "acceptable" body of the
+request we want to receive inside POST method.
 
 -> The same url given to our "@RequestMapping" annotation will work here too.
 SOS! -> Note that when you are running it, both the APIs will run at the same type, both 

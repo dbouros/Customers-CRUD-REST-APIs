@@ -17,12 +17,6 @@ import java.util.List;
 //======================================================================================================================
 // Root level (Before main() function).
 
-/*
- We initialize that this is a Spring Boot application by doing 2 things !!
- 1) First we initialize the annotation(@) for the Spring Boot Application !
- 2) Secondly, inside "main" function we must add the "run" function the SpringApplication has !
-*/
-
 @SpringBootApplication
 // "@SpringBootApplication" == "@Configuration" + "@EnableAutoConfiguration" + "@ComponentScan".
 // If I were to use "@ComponentScan" I would also need to give a path for components:
@@ -38,7 +32,7 @@ import java.util.List;
 public class Main {
 
 //=================================================================================================================================================================
-// First section (Learning "record" and "@GetMapping").
+// First section (Using the "record" class and creating a 'Greet_User' API).
 
     @GetMapping("/Greet_User") // Path "/" == "http://localhost:8080/" , ex. Path "/Greet_User" == "http://localhost:8080/Greet_User".
     private greet_Response greet_User() {
@@ -54,8 +48,7 @@ public class Main {
      In the above code, we are creating a method named "greet_User" of type "greet_Response()" (The "record" class below) and an
      instance(object) of it in the "return".
      The response that appears on the screen "{"greet":"Hello User !!"}" is JSON format, a JSON object. This is due to Maven's
-     external library called "Jackson" which is the best known JSON parser for Java.
-     (JSON == JavaScript Object Notation)
+     external library called "Jackson" which is the best known JSON parser for Java. (JSON == JavaScript Object Notation)
     */
 
     // SOS! -> After the "@RequestMapping" adding a new universal url the new path that our "greet_User"
@@ -79,6 +72,7 @@ public class Main {
 
     // 1) Read Customers API.
     // This is a GET request, for the client to get an existing resource from our database.
+    // (More on "resources/Notes and Images/Notes")
 
     // Injection
     private final CustomerRepository customerRepository;
@@ -111,36 +105,9 @@ public class Main {
 
      /*
      This is a POST request, for the client to add a new resource to our database. We basically want
-     to expose an API endpoint that clients can insert into our database too instead of only us.
-     SOS -> The tutorial is using a paid tool called "Postman" to do the HTTP POST Request, so I had to
-     find a different way to test if the API works.
-     1) I created a "data.json" inside the "resources" folder containing the data I wanted to POST to
-     our server and save into the database.
-     2) I (as a client now) used the following terminal command to do the POST request.
-     -> Command: "curl -X POST -H "Content-Type: application/json" -d @data.json http://localhost:8080/api/v1/customers"
-          1) curl: The command for the web request.
-          2) -X POST: The type of request is going to be "POST".
-          3) -H: The type of content that we want to send.
-          4) -d: The actual data that we are sending.
-          5) Then the link that we have are API endpoint ready to receive the request.
-    */
-
-    // Creating the body of the request that we want to accept from our client.
-    record NewCustomerRequest(
-            String name,
-            String email,
-            Integer age
-    ){}
-
-    /*
-     1) We are using the "@PostMapping" annotation to accept an HTTP POST request from the client.
-     2) The url we are using is still the existing one from the "@RequestMapping".
-     SOS! -> Note that when you are running it, both the APIs will run at the same type, both the methods
-     "getCustomers" from READ API and the "addCustomer" from CREATE API will run(it works fine) at the
-     same time. So we can POST the request to our url, then refresh the page and the client will GET back
-     the data of his POST.
-     3) We are using the "@RequestBody" annotation so that the requested body of the data that we get from
-     the user will be the type and form that we want.
+     to expose an API endpoint so that clients can insert into our database too instead of only us.
+     We can use a paid tool called "Postman" to do the HTTP POST Request, or we can do the web request
+     with the command prompt using the 'curl' command. (More on "resources/Notes and Images/Notes")
     */
     @PostMapping
     public void addCustomer(@RequestBody NewCustomerRequest request){
@@ -163,53 +130,20 @@ public class Main {
          by giving the save method the "customer" object.
         */
         customerRepository.save(customer);
-
     }
+
+    // Creating the body of the request that we want to accept from our client.
+    record NewCustomerRequest(
+            String name,
+            String email,
+            Integer age
+    ){}
 
     // 3) Delete Customer API.
 
     // This is a DELETE request, for the client to delete an existing resource from inside our database
     // that was either posted(POST) there by the client or inserted there by us.
-
-    /*
-     1) We are using the "@DeleteMapping" annotation to accept an HTTP DELETE request from the client.
-
-     2) The url of the "@RequestMapping" annotation is still enabled which means both our GET and POST APIs
-     are still operating.
-
-     3) The "@DeleteMapping" annotation though has something added in the default path that given by the
-     "@RequestMapping" annotation path: "http://localhost:8080/api/v1/customers".
-
-     4) The new path for the HTTP DELETE request will now have the "delete_resource/{customerID}" added to
-     it. The "{}" though will not be actually added in the path since they are there because we want to
-     insert a value.
-
-     5) Also the path will obviously change if we want to delete a different customer from the database
-     since their "id" is also different.
-     -> If id == 1
-        path(1): http://localhost:8080/api/v1/customers/delete_resource/1
-     -> If id == 2
-        path(2): http://localhost:8080/api/v1/customers/delete_resource/2
-     -> and so on for as many customers as we may have and want to delete.
-
-     6) As a client now, we want to create two HTTP DELETE requests from our command line to delete those
-     two resources(data objects) from the database using the two paths above.
-     For path(1):
-     -> Command: curl -X DELETE http://localhost:8080/api/v1/customers/delete_resource/1
-     For path(2):
-     -> Command: curl -X DELETE http://localhost:8080/api/v1/customers/delete_resource/2
-
-     7) Considering the case of needing an "Authorization Token" as a client to be allowed to delete
-     anything from the database, the above paths would go as follows:
-     For path(1):
-     -> Command: curl -X -H "Authorization: Bearer your_token" DELETE http://localhost:8080/api/v1/customers/delete_resource/1
-     For path(2):
-     -> Command: curl -X -H "Authorization: Bearer your_token" DELETE http://localhost:8080/api/v1/customers/delete_resource/2
-     Replace "your_token" with your actual authentication token.
-
-     8) The "@PathVariable" annotation is used to extract values from the URI template and bind them as
-     method parameters, in our case as parameter for the "deleteCustomer" method.
-    */
+    // (More on "resources/Notes and Images/Notes")
 
     @DeleteMapping("delete_resource/{customerID}")
     public void deleteCustomer(@PathVariable("customerID") Integer id){
@@ -220,13 +154,9 @@ public class Main {
     // 4) Update Customer API.
 
     /*
-     1) This API uses the "@PutMapping" annotation and has the client do an HTTP PUT request to our server
-     to update(edit) information about an existing customer, in our case the "email" variable.
-     2) We use "customerRepository" object's method "getReferenceById" that gets the "id" of an existing
-     "Customer" object and returns that "Customer" object itself.
-     3) Now as a client once again, we use the following command to update the "email" variable of the
-     customer with "id == 2".
-     -> Command: curl -X PUT -H "Content-Type: application/json" -d @update_data2.json http://localhost:8080/api/v1/customers/update_resource/2
+     1) This API uses the "@PutMapping" annotation so the client needs to do an HTTP PUT request to
+     our server to update(edit) information about an existing customer, in our case the "email" variable.
+     (More on "resources/Notes and Images/Notes")
     */
 
     @PutMapping("update_resource/{customerID}")
@@ -241,8 +171,11 @@ public class Main {
 }
 
 /*
+//SOS!! -> The class below is the exact equal of the single line "record" class that we created with the auto-generated methods
+// that were also mentioned above, and it generates the exact same result when we run the program.
 
-//SOS! -> "class greet_Response" == "record greet_Response", comment "record" and uncomment "class" and check it.
+//SOS! -> To test this fact comment the "record" class and uncomment this class below.
+
 class greet_Response {
 
     //Private and final variable "greet", exactly as the "record" class would have it.
@@ -282,8 +215,4 @@ class greet_Response {
         return Objects.hash(greet);
     }
 }
-
-    // SOS!! -> The above class is the exact equal of the single line "record" class that we created with the auto-generated methods
-    // that were also mentioned above, and it generates the exact same result when we run the program. As one can see, that one line
-    // record saves us many lines of code !!
 */
