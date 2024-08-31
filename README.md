@@ -7,7 +7,7 @@ The "Customers CRUD REST APIs" project is a Java-based application that provides
 ## Features
 
 - **RESTful APIs**: Implements a full set of CRUD operations through RESTful APIs.
-- **Database Integration**: Utilizes PostgreSQL with JPA (Java Persistence API) and Hibernate for data persistence, while running in a Docker container.
+- **Database Integration**: Utilizes PostgreSQL with JPA (Jakarta Persistence API) and Hibernate for data persistence, while running in a Docker container.
 - **Terminal API Consumption**: Detailed instructions on how to interact with the APIs using terminal commands.
 
 ## Prerequisites
