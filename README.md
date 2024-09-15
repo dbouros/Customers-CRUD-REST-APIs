@@ -12,7 +12,7 @@ The "Customers CRUD REST APIs" project is a Java-based application that provides
 
 ## Prerequisites
 
-- **Java 17** or later
+- **Java 17** or later.
 - **Maven**: For managing dependencies and building the project.
 - **Docker**: To run the PostgreSQL database container.
 - **PostgreSQL**: The database where all customer data is stored.
