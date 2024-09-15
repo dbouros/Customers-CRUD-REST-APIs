@@ -2,7 +2,7 @@
 
 ## Description
 
-The "Customers CRUD REST APIs" project is a Java-based application that provides a set of RESTful APIs for managing customer data. The application allows users to create, read, update, and delete customer records stored in a PostgreSQL database running inside a Docker container. The project showcases a complete CRUD (Create, Read, Update, Delete) functionality and provides a comprehensive demonstration of building RESTful APIs with Java and Spring Boot as well as integrating them with the PostgreSQL database running in Docker.
+The "Customers CRUD REST APIs" project is a Java-based application that provides a set of RESTful APIs for managing customer data using Spring Boot. The application allows users to create, read, update, and delete customer records stored in a PostgreSQL database running inside a Docker container. The project showcases a complete CRUD (Create, Read, Update, Delete) functionality and provides a comprehensive demonstration of building RESTful APIs with Java and Spring Boot as well as integrating them with the PostgreSQL database running in Docker.
 
 ## Features
 
@@ -12,7 +12,7 @@ The "Customers CRUD REST APIs" project is a Java-based application that provides
 
 ## Prerequisites
 
-- **Java 11** or later
+- **Java 17** or later.
 - **Maven**: For managing dependencies and building the project.
 - **Docker**: To run the PostgreSQL database container.
 - **PostgreSQL**: The database where all customer data is stored.
